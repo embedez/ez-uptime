@@ -25,3 +25,7 @@ body {
   background: rgb(var(--color-background));
   color: rgb(var(--color-text));
 }
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  content: url(https://cdn.discordapp.com/attachments/1148085991509327972/1151397774953299968/Date_range_fill_1.png);
+}

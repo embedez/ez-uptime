@@ -1,6 +1,6 @@
-import config from '../config.yml'
 import Sites from "@/app/sites";
 
+export const runtime = 'edge'
 export default function Home() {
   return (
     <main className="bg-background p-2 max-w-screen-lg mx-auto">

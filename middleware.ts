@@ -5,7 +5,6 @@ export const config = {
 }
 
 export function middleware(req: NextRequest) {
-    console.log('pikjsdfg n-fgshdfgh')
     if (!req.headers.get('authorization')) {
         return new NextResponse(null, { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="Secure Area"' }});
     }
