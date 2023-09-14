@@ -1,7 +1,7 @@
 "use client"
 import { NextPage } from 'next'
 
-import {Notification} from "@/app/settings/notification";
+import {AddNotification} from "@/app/settings/addNotification";
 import {FC, useState} from "react";
 import {DeleteNotification} from "@/app/settings/deleteNotification";
 
@@ -21,15 +21,16 @@ const HomePage: NextPage = () => {
     return (
         <div className={'min-h-screen flex flex-col'}>
             <nav className={'w-full p-4 rounded max-w-screen-xl mx-auto'}>
-                <div className={'p-4 w-full rounded-token border border-primary'}>
+                <div className={'p-4 w-full border-b  border-primary'}>
                     <Button newPage="Notification">Notifications</Button>
+
                 </div>
             </nav>
         <div className='bg-background flex items-center justify-center grow'>
             {
                 page == "Notification" &&
                 <div className={'flex flex-col max-w-screen-lg'}>
-                    <Notification/>
+                    <AddNotification/>
                     <DeleteNotification/>
                 </div>
             }

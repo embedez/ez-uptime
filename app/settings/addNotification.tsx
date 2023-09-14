@@ -2,12 +2,14 @@ import { NextPage } from 'next'
 import {useState} from "react";
 
 import config from '../../config.yml'
-import {queryClient} from "@/app/settings/queryClient";
+import {queryClient} from "@/app/queryClient";
 
-export const Notification: NextPage = () => {
+export const AddNotification: NextPage = () => {
     const [form, setForm] = useState({
-        startTime: new Date().toISOString().slice(0, 16),
-        endTime: new Date().toISOString().slice(0, 16),
+        timestamp: {
+            end: new Date().toISOString().slice(0, 16),
+            start: new Date().toISOString().slice(0, 16),
+        },
         key: Object.keys(config.track)[0],
         name: '',
         description: ''
@@ -19,13 +21,7 @@ export const Notification: NextPage = () => {
 
         fetch('/api/notice', {
             method: 'POST',
-            body: JSON.stringify({
-                ...form,
-                timestamp: {
-                    end: form.endTime,
-                    start: form.startTime
-                }
-            })
+            body: JSON.stringify(form)
         }).then(async r => {
             queryClient.setQueryData("notifications", await r.json())
         })
@@ -38,6 +34,16 @@ export const Notification: NextPage = () => {
         });
     }
 
+    const handleTimeChange = (e: { target: { name: any; value: any; }; }) => {
+        setForm({
+            ...form,
+            timestamp: {
+                ...form.timestamp,
+                [e.target.name]: e.target.value,
+            }
+        });
+    }
+
     return (
             <form className='bg-background shadow-md rounded px-8 pt-6 pb-8 mb-4 justify-between w-full flex flex-row gap-5 flex-wrap' onSubmit={handleSubmit}>
                 <div className='mb-4'>
@@ -46,7 +52,7 @@ export const Notification: NextPage = () => {
                     </label>
                     <input
                         className='border border-primary form-input bg-background focus:border-secondary transition shadow appearance-none rounded w-full py-2 px-3 bg-normal leading-tight focus:outline-none focus:shadow-outline'
-                        id='startTime' type='datetime-local' name='startTime' value={form.startTime} onChange={handleChange}/>
+                        id='startTime' type='datetime-local' name='start' value={form.timestamp.start} onChange={handleTimeChange}/>
                 </div>
 
                 <div className='mb-4'>
@@ -54,7 +60,7 @@ export const Notification: NextPage = () => {
                         End Time
                     </label>
                     <input className='bg-background focus:border-secondary transition shadow appearance-none border border-primary rounded w-full py-2 px-3 bg-normal leading-tight focus:outline-none focus:shadow-outline'
-                           id='endTime' type='datetime-local' name='endTime' value={form.endTime} onChange={handleChange}/>
+                           id='endTime' type='datetime-local' name='end' value={form.timestamp.end} onChange={handleTimeChange}/>
                 </div>
 
                 <div className='mb-4'>

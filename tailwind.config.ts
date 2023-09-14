@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss'
 
+import colors from './colors.json'
+
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,23 +16,23 @@ const config: Config = {
             'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       ringWidth: {
-        DEFAULT: 'var(--theme-rounded-base)',
+        DEFAULT: `var(${colors["theme-rounded-base"]})`,
       },
       borderRadius: {
-        DEFAULT: 'var(--theme-rounded-base)',
-        'token': 'var(--theme-rounded-base)',
+        DEFAULT: `${colors["theme-rounded-base"]}`,
+        'token': `${colors["theme-rounded-base"]}`,
       },
       colors: {
-        'background': 'rgb(var(--color-background))',
-        'primary': 'rgb(var(--color-primary))',
-        'secondary': 'rgb(var(--color-secondary))',
-        'tertiary': 'rgb(var(--color-tertiary))',
-        'success': 'rgb(var(--color-success))',
-        'warning': 'rgb(var(--color-warning))',
-        'error': 'rgb(var(--color-error))',
+        'background': `rgb(${colors["color-background"]})`,
+        'primary': `rgb(${colors["color-primary"]})`,
+        'secondary': `rgb(${colors["color-secondary"]})`,
+        'tertiary': `rgb(${colors["color-tertiary"]})`,
+        'success': `rgb(${colors["color-success"]})`,
+        'warning': `rgb(${colors["color-warning"]})`,
+        'error': `rgb(var(${colors["color-error"]}))`,
       },
       textColor: {
-        'normal': 'rgb(var(--color-text))',
+        'normal': `rgb(${colors["color-text"]})`,
       }
     }
   },

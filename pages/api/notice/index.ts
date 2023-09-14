@@ -3,7 +3,7 @@ import {Cloudflare} from "@/app/store";
 const cloudflare = new Cloudflare()
 
 export const config = {
-    runtime: 'experimental-edge',
+    runtime: 'edge',
 }
 
 const ping = async (

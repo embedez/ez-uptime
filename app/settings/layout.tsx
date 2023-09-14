@@ -1,15 +1,12 @@
-"use client"
-
-import {QueryClientProvider} from "react-query";
-import {ReactNode} from "react";
-import {queryClient} from "@/app/settings/queryClient";
+import {ReactNode} from "react"
+import {QueryClientWrapper} from "@/app/queryClient";
 
 export default function Layout({ children }:{children: ReactNode}) {
     return (
         <>
-            <QueryClientProvider client={queryClient}>
+            <QueryClientWrapper>
                 <main>{children}</main>
-            </QueryClientProvider>
+            </QueryClientWrapper>
         </>
     )
 }

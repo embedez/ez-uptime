@@ -1,6 +1,8 @@
 import {Cloudflare} from "@/app/store";
 
 import userConfig from '../../config.yml'
+import {GetServerSidePropsContext, NextApiRequest, NextApiResponse} from "next";
+import {NextFetchEvent, NextRequest} from "next/server";
 
 const cloudflare = new Cloudflare()
 
@@ -12,32 +14,6 @@ export interface statusType {
     description: string;
     code: number;
     type: 'success' | 'warning' | 'error' | 'nothing';
-}
-
-
-async function statsticalFetch(url: string): Promise<statusType> {
-    const abortController = new AbortController();
-    const id = setTimeout(() => abortController.abort(), 10000);
-
-    try {
-        let res = await fetch(url, {
-            signal: abortController.signal
-        });
-        return {
-            description: res.statusText,
-            code: res.status,
-            type: res.status >= 200 && res.status < 300 ? 'success' : res.status >= 300 && res.status < 400 ? 'warning' : 'error' as 'success' | 'warning' | 'error'
-        }
-    } catch (err) {
-        clearTimeout(id);
-        // @ts-ignore
-        if (err.name === 'AbortError') {
-            return {description: 'Request timed out', code: 0, type: 'error'};
-        } else {
-            // @ts-ignore
-            return {description: err.message, code: 504, type: 'error'};
-        }
-    }
 }
 
 const ping = async (
@@ -59,7 +35,6 @@ const ping = async (
     const everything: any[] = []
     try {
         for (const [name, value] of Object.entries(userConfig.track)) {
-            console.log(name)
             let data = await cloudflare.get(name)
             data = Array.isArray(data) ? data?.filter((t:statusType) => t.type !== 'nothing') : []
 
@@ -69,15 +44,11 @@ const ping = async (
                 description: "",
             } as statusType).reverse();
 
-            for (const v of value) {
-                status.push(
-                    await statsticalFetch(v.url)
-                )
-            }
-
             status = status.slice(-60)
-            cloudflare.put(name, JSON.stringify(status))
-            everything.push(status)
+            everything.push({
+                name,
+                status
+            })
         }
     } catch (e) {
         console.log(e)

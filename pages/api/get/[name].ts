@@ -2,7 +2,7 @@ import {Cloudflare} from "@/app/store";
 import {NextApiRequest, NextApiResponse} from "next";
 
 export const config = {
-    runtime: 'experimental-edge',
+    runtime: 'edge',
 }
 
 

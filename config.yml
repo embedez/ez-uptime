@@ -2,8 +2,6 @@ track:
   embedez:
     - name: embed ez
       url: https://embedez.com
-      regions:
-        Edge:
-          url: https://edge.embedez.com
-        Dev:
-          url: https://dev.embedez.com
+  google:
+    - name: Google
+      url: https://google.com

@@ -1,0 +1,13 @@
+{
+  "theme-rounded-base": "5px",
+  "theme-blur": "2px",
+  "theme-blur-strong": "4px",
+  "color-background": "0 0 0",
+  "color-primary": "255 255 255",
+  "color-secondary": "111 152 247",
+  "color-tertiary": "158 110 247",
+  "color-success": "110 247 188",
+  "color-warning": "204 247 110",
+  "color-error": "247 110 110",
+  "color-text": "255 255 255"
+}
