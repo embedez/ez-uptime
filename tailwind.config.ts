@@ -29,7 +29,7 @@ const config: Config = {
         'tertiary': `rgb(${colors["color-tertiary"]})`,
         'success': `rgb(${colors["color-success"]})`,
         'warning': `rgb(${colors["color-warning"]})`,
-        'error': `rgb(var(${colors["color-error"]}))`,
+        'error': `rgb(${colors["color-error"]})`,
       },
       textColor: {
         'normal': `rgb(${colors["color-text"]})`,

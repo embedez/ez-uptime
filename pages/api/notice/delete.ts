@@ -25,7 +25,7 @@ const ping = async (
 
     const url = new URL(event.url);
     const token = url.searchParams.get('token');
-    const index = Number(url.searchParams.get('index'));
+    const id = url.searchParams.get('id')
 
     if (token !== process.env.TOKEN && (username !== process.env.AUTH_USERNAME || password !== process.env.AUTH_PASSWORD)) {
         return new Response(JSON.stringify({
@@ -45,16 +45,14 @@ const ping = async (
         timestamp: {
             start: number,
             end: number
-        }
+        },
+        id: string,
     }[] = [];
 
     const cloudflareArray = await cloudflare.get('notice');
     if (Array.isArray(cloudflareArray)) notices = cloudflareArray;
 
-    // check if index is valid, then remove the notice at that index
-    if (!isNaN(index) && index >= 0 && index < notices.length) {
-        notices.splice(index, 1);
-    }
+    notices = notices.filter(n => n.id !== id)
 
     await cloudflare.put('notice', JSON.stringify(notices));
 

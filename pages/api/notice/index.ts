@@ -49,10 +49,13 @@ const ping = async (
     if (Array.isArray(cloudflareArray)) notices = cloudflareArray
 
     const body = await event.json();
+
+    console.log('new notice', body)
+
     notices.push(body);
 
 
-    cloudflare.put('notice', JSON.stringify(notices))
+    await cloudflare.put('notice', JSON.stringify(notices))
 
     return new Response(JSON.stringify(notices))
 }

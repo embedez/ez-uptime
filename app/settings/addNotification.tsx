@@ -12,16 +12,23 @@ export const AddNotification: NextPage = () => {
         },
         key: Object.keys(config.track)[0],
         name: '',
-        description: ''
+        description: '',
+        id: Date.now().toString(36) + Math.random().toString(36).substring(2)
     });
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        console.log(form);
+
+        let idForm = {
+            ...form,
+            id: Date.now().toString(36) + Math.random().toString(36).substring(2)
+        }
+        setForm(idForm)
+        console.log(idForm);
 
         fetch('/api/notice', {
             method: 'POST',
-            body: JSON.stringify(form)
+            body: JSON.stringify(idForm)
         }).then(async r => {
             queryClient.setQueryData("notifications", await r.json())
         })
