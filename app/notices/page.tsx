@@ -24,12 +24,16 @@ const HomePage: NextPage = () => {
     const groupedData = groupBy(data, d => moment(new Date(d.timestamp.start)).format('YY-M-DD'));
 
     // Create array of dates from start day to end day
+
     const startDate = moment.min(data.map(d => moment(d.timestamp.start)));
-    const endDate = moment.max(data.map(d => moment(d.timestamp.end)));
+    const startMonthDate = moment(startDate).startOf('month');
+    const endDate = moment.max(data.map(d => moment(d.timestamp.start)));
     const dateArray = [];
 
-    for (let date = moment(startDate); date.diff(endDate, 'day') <= 0; date.add(1, 'days')) {
-        dateArray.push(date.format('YY-M-DD'));
+    console.log(endDate)
+
+    for (let date = moment(startMonthDate); date.isSameOrBefore(endDate); date.add(1, 'days')) {
+        dateArray.unshift(date.format('YY-M-DD'));
     }
 
     return (

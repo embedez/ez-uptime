@@ -111,7 +111,7 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
         gap-0.5 lg:gap-2 overflow-clip max-w-full relative`}>
                 {
                     new Array(31).fill({}).map((status, i) =>
-                        <div key={name + i} className={`bg-gray-500 rounded-full shrink w-3.5 h-10 relative`}></div>
+                        <div key={name + i} className={`bg-gray-500 rounded-token shrink w-3.5 h-10 relative`}></div>
                     )
                 }
             </div>
@@ -120,7 +120,7 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
 
     return  <div key={data.name} className="py-2.5 flex flex-row flex-wrap gap-2.5 items-center capitalize justify-between shrink-0 relative overflow-auto">
         <div className="flex flex-row items-center gap-4 ">
-            <div className={`text-left relative rounded ${
+            <div className={`text-left relative rounded-token ${
                 statusPoints.filter(s => s.type !== 'nothing').every(d => d.type == 'success') ?
                     'bg-success' :
                     statusPoints.filter(s => s.type !== 'nothing').some(d => d.type == 'success') ?
@@ -136,7 +136,7 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
         gap-0.5 lg:gap-2 overflow-clip max-w-full relative`}>
             {
                 statusPoints.map((status, i) =>
-                    <div key={name + i} className={`${status.type !== 'nothing' ? `bg-${status.type}` : 'bg-gray-500'} rounded-full shrink w-3.5 h-10 relative`}></div>
+                    <div key={name + i} className={`${status.type !== 'nothing' ? `bg-${status.type}` : 'bg-gray-500'} rounded-token shrink w-3.5 h-10 relative`}></div>
                 )
             }
         </div>
