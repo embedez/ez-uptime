@@ -95,7 +95,7 @@ export const AddNotification: NextPage = () => {
                     <label className='block bg-normal text-sm font-bold mb-2' htmlFor='description'>
                         Description
                     </label>
-                    <textarea className='form-textarea bg-background focus:border-secondary transition shadow appearance-none border border-primary rounded w-full py-2 px-3 bg-normal leading-tight focus:outline-none focus:shadow-outline'
+                    <textarea className='form-textarea min-h-[100px] bg-background focus:border-secondary transition shadow appearance-none border border-primary rounded w-full py-2 px-3 bg-normal leading-tight focus:outline-none focus:shadow-outline'
                               id='description' name='description' value={form.description} onChange={handleChange}/>
                 </div>
 

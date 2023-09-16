@@ -17,6 +17,7 @@
     "css": "^3.0.0",
     "eslint-config-next": "13.4.19",
     "js-yaml-loader": "^1.2.2",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "13.4.19",
     "postcss": "8.4.29",
@@ -27,6 +28,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.6.0"
+    "@cloudflare/next-on-pages": "^1.6.0",
+    "@types/lodash": "^4.14.198"
   }
 }

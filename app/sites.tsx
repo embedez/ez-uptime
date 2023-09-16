@@ -81,8 +81,8 @@ export const Total = () => {
 
 const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => {
 
-    const {isLoading, error, data: statusPoints } = useQuery<statusType[]>(name, () =>
-        fetch(`/api/get/${name}`).then(res => res.json())
+    const {isLoading, error, data: statusPoints } = useQuery<statusType[]>(`status-${name}`, () =>
+        fetch(`/api/get/${name}`).then(res => res.json()),
     )
     const [added, setAdded] = useState(false)
 
