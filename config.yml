@@ -2,6 +2,3 @@ track:
   embedez:
     - name: embed ez
       url: https://embedez.com
-  google:
-    - name: Google
-      url: https://google.com

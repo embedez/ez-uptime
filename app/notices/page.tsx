@@ -1,6 +1,6 @@
 "use client"
 import { NextPage } from 'next'
-import Sites, {SitesContextProvider, Total} from "@/app/sites";
+import Sites, {SitesContextProvider, Total} from "@/components/sites";
 import {queryClient, QueryClientWrapper} from "@/app/queryClient";
 import Link from "next/link";
 import {Notification, Notifications} from "@/components/notification";
@@ -27,7 +27,7 @@ const HomePage: NextPage = () => {
 
     const startDate = moment.min(data.map(d => moment(d.timestamp.start)));
     const startMonthDate = moment(startDate).startOf('month');
-    const endDate = moment.max(data.map(d => moment(d.timestamp.start)));
+    const endDate = moment.max([moment(new Date()), ...data.map(d => moment(d.timestamp.start))]);
     const dateArray = [];
 
     console.log(endDate)
@@ -47,7 +47,7 @@ const HomePage: NextPage = () => {
                         dateArray.map((day, index) => {
                             const notifications = groupedData[day] || [];
                             return (
-                                <div key={day} className="w-full relative">
+                                <div key={day} className="w-full relative min-h-[75px] flex flex-col gap-4 ">
                                     <p className="w-full border-b border-primary">{day}</p>
                                     {
                                         notifications.length > 0 ?

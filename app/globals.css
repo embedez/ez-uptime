@@ -29,3 +29,40 @@ body {
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   content: url(https://cdn.discordapp.com/attachments/1148085991509327972/1151397774953299968/Date_range_fill_1.png);
 }
+
+.arrowDown{
+  justify-content: center;
+  z-index: 5;
+  /* background-color: rgb(var(--color-primary)); */
+}
+
+/* Nano Whoa */
+.arrowDown::after{
+  content: '';
+  width: 15px;
+  height: 15px;
+  border-bottom: 1px solid rgb(var(--color-primary));
+  border-right: 1px solid rgb(var(--color-primary));
+  background-color: rgb(var(--color-background));
+  z-index: 6;
+  left: calc(50% - 14.5px);
+  transform: rotate(45deg) translate(0, -65%);
+  /*border-top: 5px solid rgb(var(--color-primary));*/
+  position: absolute;
+  top: 100%;
+}
+
+/*.arrowDown::before{*/
+/*  position: absolute !important;*/
+/*  transform: rotate(45deg) !important;*/
+/*  bottom: 0 !important;*/
+/*  width: 15px !important;*/
+/*  background-color: rgb(var(--color-primary)) !important;*/
+/*  height: 15px !important;*/
+/*  z-index: 10;*/
+/*  left: calc(50% - 15px) !important;*/
+/*}*/
+
+/*.arrowDown{*/
+/*  !*background-color: rgb(var(--color-primary));*!*/
+/*}*/

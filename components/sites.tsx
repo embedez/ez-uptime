@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import {statusType} from "@/pages/api/ping";
 import { createContext } from 'react';
 import {useQuery} from "react-query";
+import moment from "moment";
 
 const SiteStatusContext = createContext<{
     status: statusType[][],
@@ -69,7 +70,7 @@ export const Total = () => {
 
     </div>
 
-    if (stats.total == stats.success) return <div className={'bg-success h-10 w-20 items-center text-background justify-center rounded-token text-center flex'}>
+    if (stats.total == stats.success) return <div className={'bg-success h-10 w-20 items-center text-background font-bold text-lg justify-center rounded-token text-center flex'}>
         <p>100%</p>
     </div>
 
@@ -99,6 +100,7 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
     }, [added, setStatus, status, statusPoints]);
 
     if (isLoading || !statusPoints || !Array.isArray(statusPoints)) {
+        return <></>
         return <div key={data.name} className="py-2.5 flex flex-row flex-wrap gap-2.5 items-center capitalize justify-between shrink-0 relative overflow-auto animate-pulse">
             <div className="flex flex-row items-center gap-4 ">
                 <div className={`text-left relative rounded bg-gray-500 p-2 text-black text-end`}>
@@ -108,7 +110,7 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
                 <a href={data.url} className="text-normal text-left relative">{data.name}</a>
             </div>
             <div className={`flex flex-row items-center justify-between shrink-0 
-        gap-0.5 lg:gap-2 overflow-clip max-w-full relative`}>
+        gap-0.5 lg:gap-2 max-w-full relative`}>
                 {
                     new Array(31).fill({}).map((status, i) =>
                         <div key={name + i} className={`bg-gray-500 rounded-token shrink w-3.5 h-10 relative`}></div>
@@ -118,7 +120,7 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
         </div>
     }
 
-    return  <div key={data.name} className="py-2.5 flex flex-row flex-wrap gap-2.5 items-center capitalize justify-between shrink-0 relative overflow-auto">
+    return  <div key={data.name} className="py-2.5 flex flex-row flex-wrap gap-8 items-center capitalize justify-between shrink-0 relative">
         <div className="flex flex-row items-center gap-4 ">
             <div className={`text-left relative rounded-token ${
                 statusPoints.filter(s => s.type !== 'nothing').every(d => d.type == 'success') ?
@@ -133,10 +135,20 @@ const Status = ({name, data}:{name:string, data: typeof config.track[0][0]}) => 
             <a href={data.url} className="text-normal text-left relative">{data.name}</a>
         </div>
         <div className={`flex flex-row items-center justify-between shrink-0 
-        gap-0.5 lg:gap-2 overflow-clip max-w-full relative`}>
+        gap-0.5 lg:gap-2 w-full md:w-fit relative`}>
             {
                 statusPoints.map((status, i) =>
-                    <div key={name + i} className={`${status.type !== 'nothing' ? `bg-${status.type}` : 'bg-gray-500'} rounded-token shrink w-3.5 h-10 relative`}></div>
+                    <div key={name + i} tabIndex={0} className={`${status.type !== 'nothing' ? `bg-${status.type}` : 'bg-gray-500'} rounded-token group grow md:grow-0 md:w-3.5  h-10 relative `}>
+                        <div className={`group-focus:flex duration-200 z-10 mb-1 hidden absolute bottom-full right-1/2 translate-x-1/2
+                        border border-primary rounded-token text-sm bg-background
+                        p-4 text-center flex-col arrowDown
+                        `}
+                        >
+                            <p className={'whitespace-nowrap'}>{moment(status.timestamp).fromNow() || "Unknown"}</p>
+                            <p className={'whitespace-nowrap'}>Code: {status.code}</p>
+                            <p className={'whitespace-nowrap'}>{status.type}</p>
+                        </div>
+                    </div>
                 )
             }
         </div>

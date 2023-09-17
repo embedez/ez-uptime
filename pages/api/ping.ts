@@ -12,6 +12,7 @@ export interface statusType {
     description: string;
     code: number;
     type: 'success' | 'warning' | 'error' | 'nothing';
+    timestamp: number,
 }
 
 
@@ -26,16 +27,17 @@ async function statsticalFetch(url: string): Promise<statusType> {
         return {
             description: res.statusText,
             code: res.status,
-            type: res.status >= 200 && res.status < 300 ? 'success' : res.status >= 300 && res.status < 400 ? 'warning' : 'error' as 'success' | 'warning' | 'error'
+            type: res.status >= 200 && res.status < 300 ? 'success' : res.status >= 300 && res.status < 400 ? 'warning' : 'error' as 'success' | 'warning' | 'error',
+            timestamp: new Date().getTime(),
         }
     } catch (err) {
         clearTimeout(id);
         // @ts-ignore
         if (err.name === 'AbortError') {
-            return {description: 'Request timed out', code: 0, type: 'error'};
+            return {description: 'Request timed out', code: 0, type: 'error', timestamp: new Date().getTime()};
         } else {
             // @ts-ignore
-            return {description: err.message, code: 504, type: 'error'};
+            return {description: err.message, code: 504, type: 'error', timestamp: new Date().getTime()};
         }
     }
 }
@@ -49,7 +51,8 @@ const ping = async (
         return new Response(JSON.stringify({
             description: "Forbidden",
             code: 403,
-            type: "error"
+            type: "error",
+
         }), {
             status: 403,
             statusText: 'Forbidden'
@@ -57,11 +60,15 @@ const ping = async (
     }
 
     const everything: any[] = []
+    const promiseArray: Promise<any>[] = [];
+
     try {
         for (const [name, value] of Object.entries(userConfig.track)) {
             console.log(name)
-            let data = await cloudflare.get(name)
-            data = Array.isArray(data) ? data?.filter((t:statusType) => t.type !== 'nothing') : []
+            let data = await cloudflare.get(name);
+            data = Array.isArray(data) ? data?.filter((t:statusType) => t.type !== 'nothing') : [];
+
+            const statusPromises = value.map((v) => statsticalFetch(v.url));
 
             let status: statusType[] = Array(30).fill(null).map((e, i) => data[i] || {
                 type: 'nothing',
@@ -69,16 +76,15 @@ const ping = async (
                 description: "",
             } as statusType).reverse();
 
-            for (const v of value) {
-                status.push(
-                    await statsticalFetch(v.url)
-                )
-            }
+            status = status.concat(await Promise.all(statusPromises));
+            status = status.slice(-60);
 
-            status = status.slice(-60)
-            cloudflare.put(name, JSON.stringify(status))
-            everything.push(status)
+            console.log(name)
+            promiseArray.push(cloudflare.put(name, JSON.stringify(status)));
+            everything.push(status);
         }
+
+        await Promise.all(promiseArray);
     } catch (e) {
         console.log(e)
     }

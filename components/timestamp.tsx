@@ -10,9 +10,7 @@ export const Timestamp = ({
 }) => {
     //const [currentTime, setCurrentTime] = useState<number>(new Date().getTime())
 
-    return <>
-        {moment(time).fromNow()}
-    </>
+    return moment(time).fromNow()
 }
 
 export const TenseTime = ({
@@ -30,12 +28,12 @@ export const TenseTime = ({
     if (now < time) {
         return <div className={'text-justify w-full'}>
             {prior}
-            <Timestamp time={time}/>
+            {Timestamp({time})}
         </div>;
     } else {
         return <div className={'text-justify w-full'}>
             {after}
-            <Timestamp time={time}/>
+            {Timestamp({time})}
         </div>;
     }
 }

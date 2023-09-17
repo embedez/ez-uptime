@@ -1,4 +1,4 @@
-import Sites, {SitesContextProvider, Total} from "@/app/sites";
+import Sites, {SitesContextProvider, Total} from "@/components/sites";
 import {Notifications} from "@/components/notification";
 import Link from "next/link";
 
